@@ -11,8 +11,8 @@ import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
   ResponsiveContainer, AreaChart, Area
 } from 'recharts';
-
 import { Printer } from "lucide-react";
+import CustomReportFooter from '../components/custom_report_footer';
 
 export default function FullReportPage() {
   const searchParams = useSearchParams();
@@ -46,7 +46,7 @@ export default function FullReportPage() {
   ];
 
   return (
-    <>
+    <div className = "bg-white">
       <Header />
 
       <div className="bg-green-800 text-white p-6 shadow-lg max-w-4xl mx-auto" dir="rtl">
@@ -189,20 +189,12 @@ export default function FullReportPage() {
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
+        <CustomReportFooter />
               </div>
             </div>
           </div>
         </div>
-
-        <footer className="bg-green-100 border-t border-green-300 mt-10 py-6" dir="rtl">
-          <div className="max-w-4xl mx-auto text-sm text-green-800 text-center space-y-2">
-            <p>تهیه‌شده توسط ریاست معافیت کتلوی - وزارت صحت عامه ا.ا.ا</p>
-            <p>این گزارش بخشی از فعالیت‌های نظارتی و معلوماتی عمومی می‌باشد.</p>
-            <p>در صورت هرگونه سوال یا وضاحت بیشتر، لطفاً با ریاست معافیت کتلوی تماس بگیرید.</p>
-            <p className="text-xs text-green-600 mt-2">نسخه: 1.0 | تاریخ تولید: {new Date().toLocaleDateString('fa-AF')}</p>
-          </div>
-        </footer>
       </div>
-    </>
+    </div>
   );
 }
