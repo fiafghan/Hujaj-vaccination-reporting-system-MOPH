@@ -13,8 +13,8 @@ interface CustomReportHeaderProps {
 export default function CustomReportHeader({
   generatedBy,
   reportType,
-  title = "Vaccination Registration System",
-  subtitle = "Islamic Emirate of Afghanistan",
+  title = "سیستم ثبت معلومات واکسیناسیون حجاج",
+  subtitle = "امارت اسلامی افغانستان",
   department = "",
 }: CustomReportHeaderProps) {
   return (

@@ -94,6 +94,7 @@ const FemaleReport = () => {
   };
 
   return (
+    <div className = "bg-white">
     <div className="max-w-6xl mx-auto py-16 px-6 md:px-10 bg-white min-h-screen" dir = "rtl">
     <CustomReportHeader reportType='جنسیت - اناث' title = "گزارش واکسناسیون حجاج" 
     generatedBy='مرسل احمدی' subtitle='ریاست معافیت کتلوی'  />
@@ -126,6 +127,7 @@ const FemaleReport = () => {
         </div>
       </div>
       <CustomReportFooter />
+    </div>
     </div>
   );
 };
