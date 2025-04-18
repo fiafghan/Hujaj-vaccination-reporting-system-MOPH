@@ -47,6 +47,7 @@ export default function KabulReportPage() {
   const totalVaccinated = genderData.reduce((acc, curr) => acc + curr.value, 0);
 
   return (
+    <div className="bg-white">
     <div className="max-w-6xl mx-auto py-16 px-6 md:px-10 bg-white min-h-screen">
       <CustomReportHeader generatedBy="فردین ابراهیمی" reportType="بر اساس زون هرات" 
       title = "گزارش واکسیناسیون حجاج بر اساس زون هرات" subtitle="ریاست معافیت کتلوی" 
@@ -108,6 +109,7 @@ export default function KabulReportPage() {
         </ResponsiveContainer>
       </div>
       <CustomReportFooter />
+    </div>
     </div>
   );
 }

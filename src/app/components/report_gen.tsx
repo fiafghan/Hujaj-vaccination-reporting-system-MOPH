@@ -22,16 +22,22 @@ export default function ReportForm() {
 
   const handleGenerateReport = () => {
     let query = `?startDate=${startDate}&endDate=${endDate}`;
-
-    if (generalReport) {
-      // Redirect to the general report route
-      router.push(`/full_report${query}`); }
   
-    if (!generalReport) {
-      if (zone) {
-        query += `&gender=${gender}&ageCategory=${ageCategory}`;
-        router.push(`/zones/${zone}${query}`);
-      }
+    if (generalReport) {
+      router.push(`/full_report${query}`);
+      return;
+    }
+  
+    // Redirect based on gender if selected
+    if (gender) {
+      router.push(`/gender/${gender}${query}`);
+      return;
+    }
+  
+    // If zone is selected and gender is not, use zone route
+    if (zone) {
+      query += `&gender=${gender}&ageCategory=${ageCategory}`;
+      router.push(`/zones/${zone}${query}`);
     }
   };
 
