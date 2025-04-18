@@ -7,9 +7,7 @@ import { reportData } from '@/data/reportData';
 import {
   PieChart, Pie, Cell,
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  LineChart, Line,
-  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-  ResponsiveContainer, AreaChart, Area
+  LineChart, Line,ResponsiveContainer
 } from 'recharts';
 import { Printer } from "lucide-react";
 import CustomReportFooter from '../components/custom_report_footer';
@@ -48,7 +46,6 @@ export default function FullReportPage() {
   return (
     <div className = "bg-white">
       <Header />
-
       <div className="bg-green-800 text-white p-6 shadow-lg max-w-4xl mx-auto" dir="rtl">
         <div className="max-w-4xl mx-auto flex flex-col items-center gap-4 text-center">
           <div className="flex justify-center items-center gap-8 flex-wrap">
@@ -74,7 +71,7 @@ export default function FullReportPage() {
 
       <div className="bg-white min-h-screen p-5" dir="rtl">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-green-50 border border-green-300 rounded-xl p-6 text-green-800 text-right">
+          <div className="bg-green-50 border border-green-300 p-6 text-green-800 text-right">
             <div className="flex flex-row">
               <Printer className="pl-1" />
               <button onClick={handlePrint}>چاپ گزارش</button>
@@ -189,10 +186,10 @@ export default function FullReportPage() {
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
-        <CustomReportFooter />
               </div>
             </div>
           </div>
+        <CustomReportFooter />
         </div>
       </div>
     </div>

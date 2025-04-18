@@ -15,7 +15,7 @@ export default function CustomReportHeader({
   reportType,
   title = "Vaccination Registration System",
   subtitle = "Islamic Emirate of Afghanistan",
-  department = "Ministry of Public Health - Kitlawi",
+  department = "",
 }: CustomReportHeaderProps) {
   return (
     <header className="bg-white text-green-700 p-6 shadow-md rounded-2xl border

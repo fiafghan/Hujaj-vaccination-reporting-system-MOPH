@@ -15,7 +15,7 @@ export default function CustomReportFooter({
 }: CustomReportFooterProps) {
   return (
     <footer
-      className="bg-green-700 text-white p-6 shadow-md rounded-2xl border border-green-600 mt-10"
+      className="bg-green-700 text-white p-6 shadow-md rounded-sm border border-green-600 mt-10"
       dir="rtl"
     >
       <div className="flex flex-col md:flex-row items-center justify-between">
@@ -29,9 +29,9 @@ export default function CustomReportFooter({
         </div>
 
         {/* Footer icon or text */}
-        <div className="mt-4 md:mt-0 flex items-center space-x-2 space-x-reverse text-sm">
+        <div className="mt-4 md:mt-0 flex items-center space-x-2 space-x-reverse text-sm" dir = "rtl">
           <FileText size={20} />
-          <span>تمام حقوق محفوظ است © {new Date().getFullYear()}</span>
+          <span>تمام حقوق محفوظ است © 1404</span>
         </div>
       </div>
     </footer>
