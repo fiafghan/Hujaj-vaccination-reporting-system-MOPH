@@ -3,9 +3,9 @@
 import React from 'react';
 
 interface CoverPageProps {
-  generatedBy: string;
-  reportDate: string;
-  reportType: string;
+  generatedBy?: string;
+  reportDate?: string;
+  reportType?: string;
   startDate?: string | null;
   endDate?: string | null;
   logo?: string;
