@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
   BarChart,
-  Bar,
+  Bar,  
   XAxis,
   YAxis,
   CartesianGrid,

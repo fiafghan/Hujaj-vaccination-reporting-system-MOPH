@@ -11,6 +11,8 @@ import {
 } from 'recharts';
 import { Printer } from "lucide-react";
 import CustomReportFooter from '../components/custom_report_footer';
+import CoverPage from '../components/CoverPage';
+import PrefacePage from '../components/Preface';
 
 export default function FullReportPage() {
   const searchParams = useSearchParams();
@@ -46,6 +48,20 @@ export default function FullReportPage() {
   return (
     <div className = "bg-white">
       <Header />
+      <CoverPage
+        generatedBy = "فردین ابراهیمی"
+        reportDate='30 حمل 1404'
+        reportType='گزارش عمومی'
+        startDate= "30 جدی 1403"
+        endDate="30 حمل 1404"
+      />
+
+          <PrefacePage
+          authorName='فردین ابراهیمی'
+          date='30 حمل 1404'
+          position='آمر معافیت کتلوی'
+          />
+
       <div className="bg-green-800 text-white p-6 shadow-lg max-w-4xl mx-auto" dir="rtl">
         <div className="max-w-4xl mx-auto flex flex-col items-center gap-4 text-center">
           <div className="flex justify-center items-center gap-8 flex-wrap">
@@ -56,7 +72,7 @@ export default function FullReportPage() {
 
           <h1 className="text-3xl font-bold">وزارت صحت عامه ا.ا.ا</h1>
           <p className="text-2xl">ریاست معافیت کتلوی</p>
-          <p className="text-lg">سیستم ثبت معلومات واکسیناسیون حجاج</p>
+          <p className="text-lg">سیستم ثبت معلومات واکسیناسیون</p>
 
           <div className="text-sm space-y-1">
             <p><strong>نام تهیه‌کننده گزارش:</strong> {generatedBy}</p>
