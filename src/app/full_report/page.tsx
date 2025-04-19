@@ -2,15 +2,18 @@
 
 import React from 'react';
 import { useSearchParams } from 'next/navigation';
-import Header from '../components/header';
+import Header from '../components_2/header';
 import { reportData } from '@/data/reportData';
 import {
   PieChart, Pie, Cell,
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  LineChart, Line,ResponsiveContainer
+  LineChart, Line, ResponsiveContainer
 } from 'recharts';
-import CoverPage from '../components/CoverPage';
-import PrefacePage from '../components/Preface';
+import CoverPage from '../components_2/CoverPage';
+import PrefacePage from '../components_2/Preface';
+import { PieChartFullReport } from '@/components/ui/pie_chart_full_report';
+import { BarChartFullReport } from '@/components/ui/barChartFullReport';
+import { ZoneGenderBarChart } from '@/components/ui/barChartFullReportZoneFemaleMale';
 
 export default function FullReportPage() {
   const searchParams = useSearchParams();
@@ -18,122 +21,61 @@ export default function FullReportPage() {
   const endDate = searchParams.get('endDate');
   const generatedBy = 'فردین ابراهیمی';
 
-  const {
-    totalPeople,
-    male,
-    female,
-    age_18_35,
-    age_36_60,
-    age_61_100,
-    zoneData,
-  } = reportData;
+  const ageData = [
+    { name: 'زیر سن 18', value: reportData.under_18 },
+    { name: '19-29', value: reportData.age_19_29 },
+    { name: '30-50', value: reportData.age_30_50 },
+    { name: 'بالای 50 سال', value: reportData.age_over_50 },
+  ];
+
+  const zoneData = reportData.zoneData;
 
   const handlePrint = () => {
     window.print();
   };
 
-  const ageData = [
-    { name: '۱۸-۳۵', value: age_18_35 },
-    { name: '۳۶-۶۰', value: age_36_60 },
-    { name: '۶۱-۱۰۰', value: age_61_100 },
-  ];
-
-  const genderRadarData = [
-    { subject: 'مردان', A: male, fullMark: totalPeople },
-    { subject: 'زنان', A: female, fullMark: totalPeople },
-  ];
-
   return (
-    <div className = "bg-white">
+    <div className="bg-white">
       <Header />
 
-          <CoverPage
-            generatedBy = "فردین ابراهیمی"
-            reportDate='30 حمل 1404'
-            reportType='گزارش عمومی'
-            startDate= "30 جدی 1403"
-            endDate="30 حمل 1404"
-          />
+      <CoverPage
+        generatedBy="فردین ابراهیمی"
+        reportDate="30 حمل 1404"
+        reportType="گزارش عمومی"
+        startDate="30 جدی 1403"
+        endDate="30 حمل 1404"
+      />
 
-          <PrefacePage
-          authorName='فردین ابراهیمی'
-          date='30 حمل 1404'
-          position='آمر معافیت کتلوی'
-          />
+      <PrefacePage
+        authorName="فردین ابراهیمی"
+        date="30 حمل 1404"
+        position="آمر معافیت کتلوی"
+      />
 
-      <div className="bg-white min-h-screen p-5 " dir="rtl">
-        <div className="max-w-4xl mx-auto w-[794px] h-[1123px]
-      flex flex-col justify-between relative">
-          <div className="bg-green-50 border  p-6 text-green-800 text-right">
-
+      <div className="bg-white min-h-screen p-5" dir="rtl">
+        <div className="max-w-4xl mx-auto w-[794px] h-[1123px] flex flex-col justify-between relative">
+          <div className="bg-green-50 border p-6 text-green-800 text-right">
             <div className="mt-6">
               <h3 className="text-xl font-semibold mb-3">📊 خلاصه گزارش</h3>
               <ul className="list-disc pr-5">
-                <li>تعداد مجموعی افراد: {totalPeople}</li>
-                <li>مردان: {male} نفر</li>
-                <li>زنان: {female} نفر</li>
-                <li>گروه سنی ۱۸-۳۵: {age_18_35} نفر</li>
-                <li>گروه سنی ۳۶-۶۰: {age_36_60} نفر</li>
-                <li>گروه سنی ۶۱-۱۰۰: {age_61_100} نفر</li>
+                <li>تعداد مجموعی افراد: {reportData.totalPeople}</li>
+                <li>مردان: {reportData.male} نفر</li>
+                <li>زنان: {reportData.female} نفر</li>
+                <li>زیر سن 18: {reportData.under_18} نفر</li>
+                <li>19-29: {reportData.age_19_29} نفر</li>
+                <li>30-50: {reportData.age_30_50} نفر</li>
+                <li>بالای 50 سال: {reportData.age_over_50} نفر</li>
               </ul>
 
               <div className="mt-10">
-                <h3 className="text-xl font-semibold mb-3 text-green-800 text-right">📊 نمودار جنسیت</h3>
-                <ResponsiveContainer width="100%" height={250}>
-                  <PieChart>
-                    <Pie
-                      data={[
-                        { name: 'مردان', value: male },
-                        { name: 'زنان', value: female },
-                      ]}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      fill="#38a169"
-                      label
-                    >
-                      <Cell fill="#3182ce" />
-                      <Cell fill="#e53e3e" />
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
+                <PieChartFullReport />
               </div>
 
               <div className="mt-10">
-                <h3 className="text-xl font-semibold mb-3 text-green-800 text-right">📊 نمودار گروه‌های سنی</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart
-                    data={ageData}
-                    margin={{ top: 10, right: 30, left: 0, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="value" fill="#38a169" />
-                  </BarChart>
-                </ResponsiveContainer>
+                <BarChartFullReport />
               </div>
 
-              <div className="mt-10">
-                <h3 className="text-xl font-semibold mb-3 text-green-800 text-right">📈 نمودار خطی تغییرات سنی</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={ageData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-
-           
+             
 
               <div className="mt-10">
                 <h3 className="text-xl font-semibold mb-3">🗺️ گزارش بر اساس زون ها</h3>
@@ -159,27 +101,13 @@ export default function FullReportPage() {
                 </table>
 
                 <div className="mt-10">
-                  <h3 className="text-xl font-semibold mb-3 text-green-800 text-right">🗺️ نمودار گزارش بر اساس ولایات</h3>
-                  <ResponsiveContainer width="100%" height={350}>
-                    <BarChart
-                      data={zoneData}
-                      margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="zone" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="male" stackId="a" fill="#3182ce" name="مردان" />
-                      <Bar dataKey="female" stackId="a" fill="#e53e3e" name="زنان" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  <ZoneGenderBarChart />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
   );
 }

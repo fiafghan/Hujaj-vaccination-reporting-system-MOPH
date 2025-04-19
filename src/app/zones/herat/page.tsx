@@ -14,8 +14,8 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from 'recharts';
-import CoverPage from '@/app/components/CoverPage';
-import PrefacePage from '@/app/components/Preface';
+import CoverPage from '@/app/components_2/CoverPage';
+import PrefacePage from '@/app/components_2/Preface';
 
 
 const COLORS = ['#10B981', '#3B82F6'];

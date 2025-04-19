@@ -15,8 +15,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import CustomReportHeader from "@/app/components/custom_report_header";
-import CustomReportFooter from "@/app/components/custom_report_footer";
+import CustomReportHeader from "@/app/components_2/custom_report_header";
+import CustomReportFooter from "@/app/components_2/custom_report_footer";
 
 const COLORS = ["#10B981", "#3B82F6"];
 

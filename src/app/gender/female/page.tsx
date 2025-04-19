@@ -2,8 +2,8 @@
 
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-import CustomReportHeader from '../../components/custom_report_header';
-import CustomReportFooter from '@/app/components/custom_report_footer';
+import CustomReportHeader from '../../components_2/custom_report_header';
+import CustomReportFooter from '@/app/components_2/custom_report_footer';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Header from "./components/header";
-import ReportForm from "./components/report_gen";
+import Header from "./components_2/header";
+import ReportForm from "./components_2/report_gen";
 
 export default function Home() {
   return (

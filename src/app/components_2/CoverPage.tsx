@@ -9,6 +9,7 @@ interface CoverPageProps {
   startDate?: string | null;
   endDate?: string | null;
   logo?: string;
+  ieaLogo?: string; // Add the prop for the Islamic Emirate of Afghanistan logo
 }
 
 export default function CoverPage({
@@ -18,6 +19,7 @@ export default function CoverPage({
   startDate = '---',
   endDate = '---',
   logo = '/moph_logo.jpg',
+  ieaLogo = '/iea.jpg', // Default path for the Islamic Emirate of Afghanistan logo
 }: CoverPageProps) {
   return (
     <div className="bg-[#f8fafc] text-gray-900 flex items-center justify-center p-6">
@@ -26,8 +28,9 @@ export default function CoverPage({
         style={{ fontFamily: `'Segoe UI', 'Helvetica Neue', Arial, sans-serif` }}
         dir="rtl"
       >
-        {/* Header: Logo */}
-        <div className="flex justify-center">
+        {/* Header: Logos */}
+        <div className="flex justify-between items-center">
+        <img src={ieaLogo} alt="Islamic Emirate of Afghanistan Logo" className="h-28 object-contain" />
           <img src={logo} alt="MoPH Logo" className="h-28 object-contain" />
         </div>
 
