@@ -68,7 +68,7 @@ export default function ReportForm() {
             onChange={(e) => setZone(e.target.value)}
             disabled={generalReport}
           >
-            <option value="">انتخاب کنید</option>
+            <option value="">همه</option>
             <option value="kabul">کابل</option>
             <option value="kandahar">کندهار</option>
             <option value="herat">هرات</option>
@@ -89,7 +89,7 @@ export default function ReportForm() {
             onChange={(e) => setGender(e.target.value)}
             disabled={generalReport}
           >
-            <option value="">انتخاب کنید</option>
+            <option value="">همه</option>
             <option value="male">مرد</option>
             <option value="female">زن</option>
           </select>
@@ -108,10 +108,11 @@ export default function ReportForm() {
             onChange={(e) => setAgeCategory(e.target.value)}
             disabled={generalReport}
           >
-            <option value="">انتخاب کنید</option>
-            <option value="18-35">۱۸ - ۳۵ سال</option>
-            <option value="36-60">۳۶ - ۶۰ سال</option>
-            <option value="61-100">۶۱ - ۱۰۰ سال</option>
+            <option value="">همه</option>
+            <option value="18-35">زیر سن 18</option>
+            <option value="36-60">19 - 29</option>
+            <option value="61-100">30 - 50</option>
+            <option value="61-100">بالای 50 سال</option>
           </select>
         </div>
 
@@ -155,7 +156,7 @@ export default function ReportForm() {
             checked={generalReport}
             onChange={(e) => setGeneralReport(e.target.checked)}
           />
-          <span className="ml-2 text-sm text-gray-700">
+          <span className="ml-2 text-sm text-gray-700 mr-3">
             گزارش عمومی (شامل تمام زون‌ها و گروه‌ها)
           </span>
         </label>
