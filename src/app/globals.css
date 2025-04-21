@@ -118,3 +118,19 @@
   }
 }
 
+@font-face {
+  font-family: 'BNazanin';
+  src: url('/fonts/BNazanin.woff2') format('woff2'),
+       url('/fonts/BNazanin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply the font globally
+* {
+  font-family: 'BNazanin', sans-serif;
+  margin: 0;
+  padding: 0;
+} */
+

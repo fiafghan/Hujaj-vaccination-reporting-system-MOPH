@@ -24,7 +24,8 @@ export default function CoverPage({
   return (
     <div className="bg-[#f8fafc] text-gray-900 flex items-center justify-center p-6">
       <div
-        className="w-[794px] h-[1123px] bg-white border border-gray-300 shadow-2xl rounded-sm px-20 py-20 flex flex-col justify-between"
+        className="w-[794px] h-[1123px] bg-white border border-gray-300 shadow-2xl rounded-sm px-20 
+        py-20 flex flex-col justify-between"
         style={{ fontFamily: `'Segoe UI', 'Helvetica Neue', Arial, sans-serif` }}
         dir="rtl"
       >

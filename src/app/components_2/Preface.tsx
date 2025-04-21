@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface PrefacePageProps {
   authorName?: string;
@@ -21,6 +21,23 @@ export default function PrefacePage({
 
 امید است که یافته‌های این گزارش مورد استفاده‌ی مسوولین و برنامه‌ریزان قرار گیرد و به‌عنوان یک گام دیگر در راستای ارتقای معافیت کتلوی و صحت جامعه نقش مؤثری ایفا نماید.`,
 }: PrefacePageProps) {
+  // States to hold the fetched data
+  const [reporter, setReporter] = useState<string | undefined>(authorName);
+  const [visitDate, setVisitDate] = useState<string | undefined>(date);
+
+  // Fetch data on component mount
+  useEffect(() => {
+    // Fetch reporter
+    fetch('http://localhost:5000/reporter')
+      .then((response) => response.json())
+      .then((data) => setReporter(data.reporter));
+
+    // Fetch visit date
+    fetch('http://localhost:5000/visitDate')
+      .then((response) => response.json())
+      .then((data) => setVisitDate(data.visitDate));
+  }, []); // Empty array ensures this effect runs once when the component mounts
+
   return (
     <div className="bg-[#f9fafb] flex items-center justify-center min-h-screen px-6">
       <div
@@ -32,18 +49,18 @@ export default function PrefacePage({
         {/* Title */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-green-900 tracking-wider pb-4">پیش‌گفتار</h2>
-           {/* Message */}
-        <div className="text-[16px] text-black leading-loose text-justify whitespace-pre-line">
-          {message}
-        </div>
+          {/* Message */}
+          <div className="text-[16px] text-black leading-loose text-justify whitespace-pre-line">
+            {message}
+          </div>
         </div>
 
         {/* Signature */}
         <div className="text-right mt-20 space-y-1 text-[15px] text-gray-800">
-          <p className="font-semibold text-lg">{authorName}</p>
+          <p className="font-semibold text-lg">{reporter}</p> {/* Display dynamic reporter */}
           <p>{position}</p>
           <p>{organization}</p>
-          <p className="text-sm text-gray-500 mt-2">{date}</p>
+          <p className="text-sm text-gray-500 mt-2">{visitDate}</p> {/* Display dynamic visit date */}
         </div>
 
         {/* Page Number */}

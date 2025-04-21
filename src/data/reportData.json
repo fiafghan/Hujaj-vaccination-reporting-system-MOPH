@@ -1,0 +1,26 @@
+{
+    "zoneName": { "name": "کابل" },
+    "totalPeople": 1200,
+    "genderData": {
+      "maleNumber": 700,
+      "femaleNumber": 500
+    },
+    "ageCategories": [
+      { "name": "زیر 18 سال", "value": 100 },
+      { "name": "18 - 29", "value": 500 },
+      { "name": "30 - 50", "value": 600 }
+    ],
+    "travelTypes": {
+      "حج عمره": 400,
+      "حج فرضی": 600,
+      "سفر عادی": 200
+    },
+    "destinationData": [
+      { "country": "امریکا", "value": 50 },
+      { "country": "کانادا", "value": 40 },
+      { "country": "استرالیا", "value": 30 }
+    ],
+    "reporter": "احمد جبارخیل",
+    "visitDate": "4/21/2025"
+  }
+  

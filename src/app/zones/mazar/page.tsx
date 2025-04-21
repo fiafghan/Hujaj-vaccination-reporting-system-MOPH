@@ -1,113 +1,141 @@
-"use client";
+'use client';
 
-import React from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
+import React, { useEffect, useState } from 'react';
+import { Line, Bar, Pie, Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, 
+    LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import { reportData, ZoneItem } from '@/data/reportData';
+import CoverPage from '@/app/components_2/CoverPage';
+import PrefacePage from '@/app/components_2/Preface';
+import { BarChartComponent } from '@/components/ui/BarChart';
+
+// ثبت اجزای لازم برای chart.js
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Title,
   Tooltip,
   Legend,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
+  ArcElement
+);
 
-import CustomReportHeader from "@/app/components_2/custom_report_header";
-import CustomReportFooter from "@/app/components_2/custom_report_footer";
+const MazarSharifDataPage: React.FC = () => {
+  const [mazarSharifData, setMazarSharifData] = useState<ZoneItem[]>([]);
 
-const COLORS = ["#10B981", "#3B82F6"];
+  useEffect(() => {
+    // فیلتر داده‌ها برای منطقه مزار شریف
+    const filteredData = reportData.zoneData.filter(item => item.zone === 'مزار شریف');
+    setMazarSharifData(filteredData);
+  }, []);
 
-const genderData = [
-  { name: "Male", value: 180 },
-  { name: "Female", value: 120 },
-];
+  // آماده‌سازی داده‌ها برای نمودارها
+  const totalPeople = mazarSharifData.reduce((sum, item) => sum + item.total, 0);
+  const male = mazarSharifData.reduce((sum, item) => sum + item.male, 0);
+  const female = mazarSharifData.reduce((sum, item) => sum + item.female, 0);
+  const ageCategories = {
+    under18: mazarSharifData.filter(item => item.ageCategory === 'under18').reduce((sum, item) => sum + item.total, 0),
+    '19-29': mazarSharifData.filter(item => item.ageCategory === '19-29').reduce((sum, item) => sum + item.total, 0),
+    '30-50': mazarSharifData.filter(item => item.ageCategory === '30-50').reduce((sum, item) => sum + item.total, 0),
+    '50plus': mazarSharifData.filter(item => item.ageCategory === '50plus').reduce((sum, item) => sum + item.total, 0),
+  };
 
-const ageCategoryData = [
-  {
-    ageGroup: "18-35",
-    male: 50,
-    female: 100,
-  },
-  {
-    ageGroup: "36-60",
-    male: 120,
-    female: 30,
-  },
-  {
-    ageGroup: "61-100",
-    male: 200,
-    female: 205,
-  },
-];
+  const barChartData = {
+    labels: ['مرد', 'زن'],
+    datasets: [
+      {
+        label: 'توزیع جمعیت بر اساس جنسیت',
+        data: [male, female],
+        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+        borderWidth: 1,
+      },
+    ],
+  };
 
-export default function KabulReportPage() {
-  const totalVaccinated = genderData.reduce((acc, curr) => acc + curr.value, 0);
+  const lineChartData = {
+    labels: ['زیر 18', '19-29', '30-50', '50+'],
+    datasets: [
+      {
+        label: 'توزیع سنی در مزار شریف',
+        data: [ageCategories.under18, ageCategories['19-29'], ageCategories['30-50'], ageCategories['50plus']],
+        fill: false,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        tension: 0.1,
+      },
+    ],
+  };
+
+  const pieChartData = {
+    labels: ['زیر 18', '19-29', '30-50', '50+'],
+    datasets: [
+      {
+        data: [
+          ageCategories.under18,
+          ageCategories['19-29'],
+          ageCategories['30-50'],
+          ageCategories['50plus'],
+        ],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+        hoverOffset: 4,
+      },
+    ],
+  };
+
+  const travelTypes = mazarSharifData.reduce((acc, item) => {
+    acc[item.travelType] = (acc[item.travelType] || 0) + item.total;
+    return acc;
+  }, {} as { [key: string]: number });
+
+  const doughnutChartData = {
+    labels: Object.keys(travelTypes),
+    datasets: [
+      {
+        data: Object.values(travelTypes),
+        backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#F2FF33'],
+      },
+    ],
+  };
 
   return (
-    <div className="max-w-6xl mx-auto py-16 px-6 md:px-10 bg-white min-h-screen">
-      <CustomReportHeader generatedBy="ایمل مزاری زاده" reportType="بر اساس زون مزار شریف" 
-      title = "گزارش واکسیناسیون حجاج بر اساس زون مزار شریف" subtitle="ریاست معافیت کتلوی" 
-      department="سیستم ثبت واکسیناسیون حجاج" />
-      <h1 className="text-4xl font-bold text-center text-green-700 mb-12">
-        گزارش واکسین‌شده‌ها در زون مزار شریف
-      </h1>
+    <div className="bg-[#f8fafc] text-gray-900 flex items-center justify-center p-6">
+      <CoverPage />
+      <PrefacePage />
+      <div className="w-[794px] h-[1123px] bg-white border border-gray-300 shadow-2xl rounded-lg p-8 flex flex-col space-y-8">
+        <h1 className="text-3xl font-semibold text-center">گزارش مزار شریف</h1>
+        <p className="text-lg text-center">تعداد کل افراد: {totalPeople}</p>
+        <div className="space-y-6">
+          <div className="text-center">
+            <h3 className="text-2xl font-medium">توزیع جنسیتی</h3>
+          
+            
 
-      <div className="grid md:grid-cols-2 gap-12 mb-16">
-        {/* Total Vaccinated */}
-        <div className="bg-green-100 rounded-2xl p-6 shadow-md flex flex-col justify-center items-center">
-          <h2 className="text-xl text-gray-700 font-semibold mb-4">
-            مجموع واکسین‌شده‌ها
-          </h2>
-          <p className="text-5xl text-green-700 font-bold">{totalVaccinated}</p>
-        </div>
-
-        {/* Gender Pie Chart */}
-        <div className="bg-blue-50 rounded-2xl p-6 shadow-md">
-          <h2 className="text-xl text-gray-700 font-semibold mb-4 text-center">
-            تقسیم جنسیتی
-          </h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <PieChart>
-              <Pie
-                data={genderData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                label
-                dataKey="value"
-              >
-                {genderData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
+          </div>
+          <div className="text-center">
+            <h3 className="text-2xl font-medium">توزیع سنی</h3>
+            <div className="w-80 mx-auto">
+              <Line data={lineChartData} />
+            </div>
+          </div>
+          <div className="text-center">
+            <h3 className="text-2xl font-medium">توزیع گروه‌های سنی (نمودار دایره‌ای)</h3>
+            <div className="w-60 mx-auto">
+              <Pie data={pieChartData} />
+            </div>
+          </div>
+          <div className="text-center">
+            <h3 className="text-2xl font-medium">توزیع نوع سفر (نمودار دونات)</h3>
+            <div className="w-60 mx-auto">
+              <Doughnut data={doughnutChartData} />
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Age Category Bar Chart */}
-      <div className="bg-gray-50 rounded-2xl p-6 shadow-md">
-        <h2 className="text-xl text-gray-700 font-semibold mb-4 text-center">
-          تقسیم سنی به تفکیک جنسیت
-        </h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={ageCategoryData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="ageGroup" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="male" stackId="a" fill="#10B981" name="مرد" />
-            <Bar dataKey="female" stackId="a" fill="#3B82F6" name="زن" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-      <CustomReportFooter />
     </div>
   );
-}
+};
+
+export default MazarSharifDataPage;
