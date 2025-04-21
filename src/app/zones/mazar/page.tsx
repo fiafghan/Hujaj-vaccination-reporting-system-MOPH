@@ -5,8 +5,8 @@ import { Line, Bar, Pie, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, 
     LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { reportData, ZoneItem } from '@/data/reportData';
-import CoverPage from '@/app/components_2/CoverPage';
-import PrefacePage from '@/app/components_2/Preface';
+import CoverPage from '@/app/components_2/CoverPageForGeneralReport';
+import PrefacePage from '@/app/components_2/PrefaceForGeneralReport';
 import { BarChartComponent } from '@/components/ui/BarChart';
 
 // ثبت اجزای لازم برای chart.js

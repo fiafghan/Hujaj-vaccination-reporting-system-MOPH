@@ -9,8 +9,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   LineChart, Line, ResponsiveContainer
 } from 'recharts';
-import CoverPage from '../components_2/CoverPage';
-import PrefacePage from '../components_2/Preface';
+import CoverPage from '../components_2/CoverPageForGeneralReport';
+import PrefacePage from '../components_2/PrefaceForGeneralReport';
 import { PieChartFullReport } from '@/components/ui/pie_chart_full_report';
 import { BarChartFullReport } from '@/components/ui/barChartFullReport';
 import { ZoneGenderBarChart } from '@/components/ui/barChartFullReportZoneFemaleMale';

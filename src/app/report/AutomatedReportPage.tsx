@@ -4,18 +4,19 @@ import React from 'react'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, 
     LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js'
 import dynamic from 'next/dynamic'
-import CoverPage from '@/app/components_2/CoverPage'
-import PrefacePage from '@/app/components_2/Preface'
-
 import { BarChartComponent } from '@/components/ui/BarChart'
 import PieChart2 from '@/components/ui/PieChart2Wrapper'
 import { LineChart1 } from '@/components/ui/LineChart1'
+import CoverPageForAutomatedReport from './CoverPageForAutomatedReport';
+import PrefacePage from './PrefaceForAutomatedReport'
 
 // Dynamically load the pie chart with named export
 const PieChartComponent = dynamic(() =>
   import('@/components/ui/PieChartAll').then((mod) => mod.PieChartComponent),
   { ssr: false }
 )
+
+
 
 // Register chart.js modules
 ChartJS.register(
@@ -53,7 +54,7 @@ const AutomatedReportPage: React.FC<ReportProps> = ({
      space-y-10 py-8 px-4">
 
       {/* Cover and Preface Pages */}
-      <CoverPage />
+      <CoverPageForAutomatedReport />
       <PrefacePage />
 
       {/* Main Report Card */}
