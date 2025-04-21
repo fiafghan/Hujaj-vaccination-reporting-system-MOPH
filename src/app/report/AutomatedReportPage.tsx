@@ -1,65 +1,44 @@
-"use client"
+"use client";
 
-import React from 'react'
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, 
-    LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js'
-import dynamic from 'next/dynamic'
-import { BarChartComponent } from '@/components/ui/BarChart'
-import PieChart2 from '@/components/ui/PieChart2Wrapper'
-import { LineChart1 } from '@/components/ui/LineChart1'
+import React from 'react';
+import dynamic from 'next/dynamic';
+import { BarChartComponent } from '@/components/ui/BarChart';
+import PieChart2 from '@/components/ui/PieChart2Wrapper';
+import { LineChart1 } from '@/components/ui/LineChart1';
 import CoverPageForAutomatedReport from './CoverPageForAutomatedReport';
-import PrefacePage from './PrefaceForAutomatedReport'
+import PrefacePage from './PrefaceForAutomatedReport';
 
-// Dynamically load the pie chart with named export
+// Dynamically load the PieChartComponent
 const PieChartComponent = dynamic(() =>
   import('@/components/ui/PieChartAll').then((mod) => mod.PieChartComponent),
   { ssr: false }
-)
+);
 
-
-
-// Register chart.js modules
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-)
-
-// Generalized Report Component
 interface ReportProps {
-  zoneName?: string
-  totalPeople?: number
-  genderData?: { maleNumber: number, femaleNumber: number }
-  ageCategories?: { name: string, value: number }[]
-  travelTypes?: { [key: string]: number }
-  destinationData?: { country: string, value: number }[]
+  zoneName: string;
+  totalPeople: number;
+  genderData: { maleNumber: number; femaleNumber: number };
+  ageCategories: { name: string; value: number }[];
+  travelTypes: { [key: string]: number };
+  destinationData: { country: string; value: number }[];
 }
 
 const AutomatedReportPage: React.FC<ReportProps> = ({
-  zoneName = "نام ناحیه",
-  totalPeople = 0,
-  genderData = { maleNumber: 0, femaleNumber: 0 },
-  ageCategories = [],
-  travelTypes = {},
-  destinationData = []
+  zoneName,
+  totalPeople,
+  genderData,
+  ageCategories,
+  travelTypes,
+  destinationData
 }) => {
   return (
-    <div className="bg-[#f8fafc] text-gray-900 flex flex-col items-center justify-center
-     space-y-10 py-8 px-4">
-
+    <div className="bg-[#f8fafc] text-gray-900 flex flex-col items-center justify-center space-y-10 py-8 px-4">
       {/* Cover and Preface Pages */}
       <CoverPageForAutomatedReport />
       <PrefacePage />
 
       {/* Main Report Card */}
-      <div className="w-[794px] min-h-[1123px] bg-white border border-gray-300 shadow-2xl 
-      rounded-lg p-10 flex flex-col space-y-8" dir="rtl">
+      <div className="w-[794px] min-h-[1123px] bg-white border border-gray-300 shadow-2xl rounded-lg p-10 flex flex-col space-y-8" dir="rtl">
         <h1 className="text-3xl font-bold text-center text-green-800">{`گزارش زون ${zoneName}`}</h1>
         <p className="text-lg text-center text-gray-600">{`تعداد کل افراد: ${totalPeople}`}</p>
 
@@ -115,35 +94,7 @@ const AutomatedReportPage: React.FC<ReportProps> = ({
         </div>
       )}
     </div>
-    
-  )
-
-  {/* Example Usage */}
-//   import AutomatedReportPage from '@/app/reports/AutomatedReportPage'
-
-// const ExampleUsage = () => {
-//   const reportData = {
-//     zoneName: 'کابل',
-//     totalPeople: 1200,
-//     genderData: { maleNumber: 700, femaleNumber: 500 },
-//     ageCategories: [
-//       { name: 'زیر 18 سال', value: 100 },
-//       { name: '18 - 29', value: 500 },
-//       { name: '30-50', value: 600 },
-//     ],
-//     travelTypes: { "حج عمره": 400, "حج فرضی": 600, "سفر عادی": 200 },
-//     destinationData: [
-//       { country: 'امریکا', value: 50 },
-//       { country: 'کانادا', value: 40 },
-//       { country: 'استرالیا', value: 30 },
-//     ]
-//   }
-
-//   return <AutomatedReportPage {...reportData} />
-// }
-
-// export default ExampleUsage
-
-}
+  );
+};
 
 export default AutomatedReportPage;

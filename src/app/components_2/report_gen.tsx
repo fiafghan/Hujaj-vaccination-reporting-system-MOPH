@@ -25,28 +25,28 @@ export default function ReportForm() {
   const searchParams = useSearchParams();
 
   const handleGenerateReport = () => {
-    if (!generalReport) {
-      if (!zone) {
-        alert("لطفاً زون را انتخاب کنید.");
-        return;
-      }
-      if (!gender) {
-        alert("لطفاً جنسیت را انتخاب کنید.");
-        return;
-      }
-      if (!ageCategory) {
-        alert("لطفاً سن را انتخاب کنید.");
-        return;
-      }
-      if (!travelType) {
-        alert("لطفاً نوع سفر را انتخاب کنید.");
-        return;
-      }
-      if (!arrivalCountry) {
-        alert("لطفاً کشور مقصد را وارد کنید.");
-        return;
-      }
-    }
+    // if (!generalReport) {
+    //   if (!zone) {
+    //     alert("لطفاً زون را انتخاب کنید.");
+    //     return;
+    //   }
+    //   if (!gender) {
+    //     alert("لطفاً جنسیت را انتخاب کنید.");
+    //     return;
+    //   }
+    //   if (!ageCategory) {
+    //     alert("لطفاً سن را انتخاب کنید.");
+    //     return;
+    //   }
+    //   if (!travelType) {
+    //     alert("لطفاً نوع سفر را انتخاب کنید.");
+    //     return;
+    //   }
+    //   if (!arrivalCountry) {
+    //     alert("لطفاً کشور مقصد را وارد کنید.");
+    //     return;
+    //   }
+    // }
 
     const queryParams = new URLSearchParams();
 
@@ -138,7 +138,17 @@ export default function ReportForm() {
           </label>
           <select
             value={travelType}
-            onChange={(e) => setTravelType(e.target.value)}
+            onChange={(e) => {
+              const selectedTravelType = e.target.value;
+              setTravelType(selectedTravelType);
+        
+              // Automatically set the arrival country to 'Saudi Arabia' if Hajj or Umrah is selected
+              if (selectedTravelType === "حج فرضی" || selectedTravelType === "عمره") {
+                setArrivalCountry("Saudi Arabia");
+              } else {
+                setArrivalCountry(""); // Reset if another option is selected
+              }
+            }}
             className="w-full border border-gray-300 bg-white rounded-xl px-4 py-3 
             text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400"
             disabled={generalReport}
@@ -152,18 +162,19 @@ export default function ReportForm() {
 
         {/* Arrival Country */}
         <div dir="rtl">
-          <label className="text-gray-700 mb-2 flex items-center gap-2 text-sm font-medium">
+          <label className="text-gray-700 mb-2 flex items-center gap-2 text-sm">
             <Calendar className="w-4 h-4 text-green-600" /> کشور مقصد
           </label>
         <div className="text-gray-700 flex items-center text-sm font-medium">
         <select
-  className="w-full border border-gray-300 bg-white rounded-xl px-4 py-3 text-gray-800 
-  focus:outline-none focus:ring-2 focus:ring-green-400"
-  value={arrivalCountry}
-  onChange={(e) => setArrivalCountry(e.target.value)}
-  disabled={generalReport}
->
-  <option value="">همه</option>
+          className="w-full border border-gray-300 bg-white rounded-xl px-4 py-3 text-gray-800 
+                focus:outline-none focus:ring-2 focus:ring-green-400"
+                value={arrivalCountry}
+            onChange={(e) => setArrivalCountry(e.target.value)}
+            disabled={generalReport}
+          >
+          <option value="">همه</option>
+          <option value="Saudi Arabia">عربستان سعودی</option>
   {[
     "افغانستان", "آلبانی", "الجزایر", "آندورا", "آنگولا", "آنتیگوا و باربودا", "آرژانتین",
 "ارمنستان", "استرالیا", "اتریش", "آذربایجان", "باهاما", "بحرین", "بنگلادیش", "باربادوس",
@@ -208,7 +219,8 @@ export default function ReportForm() {
           </label>
           <input
             type="date"
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 
+            focus:outline-none focus:ring-2 focus:ring-green-400"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
             disabled={generalReport}
@@ -222,7 +234,8 @@ export default function ReportForm() {
           </label>
           <input
             type="date"
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 
+            focus:outline-none focus:ring-2 focus:ring-green-400"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
             disabled={generalReport}
@@ -237,23 +250,22 @@ export default function ReportForm() {
             type="checkbox"
             className="form-checkbox text-green-600"
             checked={generalReport}
-            onChange={(e) => setGeneralReport(e.target.checked)}
-          />
-          <span className="ml-2 text-sm text-gray-700 mr-3">
-            گزارش عمومی (شامل تمام زون‌ها و گروه‌ها)
-          </span>
-        </label>
+            onChange={(e) => setGeneralReport(e.target.checked)} // Completing the checkbox handler
+            />
+            <span className="ml-2 text-gray-700">گزارش عمومی</span>
+          </label>
+        </div>
+  
+        <div className="mt-8 flex justify-center gap-6">
+          {/* Generate Report Button */}
+          <button
+            onClick={handleGenerateReport}
+            className="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400"
+          >
+            تولید گزارش
+          </button>
+        </div>
       </div>
-
-      {/* Submit Button */}
-      <div className="mt-10 text-center">
-        <button
-          onClick={handleGenerateReport}
-          className="px-8 py-3 rounded-xl font-semibold text-white bg-green-700 text-lg transition-all duration-300"
-        >
-          تولید گزارش
-        </button>
-      </div>
-    </div>
-  );
-}
+    );
+  }
+  

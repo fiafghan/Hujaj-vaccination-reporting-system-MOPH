@@ -1,61 +1,69 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-const AutomatedReportPage = dynamic(() => import('./AutomatedReportPage'), { ssr: false });
+import { useRouter } from 'next/router';
+import AutomatedReportPage from './AutomatedReportPage';
 
-const ExampleUsage = () => {
-  const [zoneName, setZoneName] = useState('');
-  const [totalPeople, setTotalPeople] = useState(0);
-  const [genderData, setGenderData] = useState({ maleNumber: 0, femaleNumber: 0 });
-  const [ageCategories, setAgeCategories] = useState([]);
-  const [travelTypes, setTravelTypes] = useState({});
-  const [destinationData, setDestinationData] = useState([]);
+const ReportPage = () => {
+  const [zoneName, setZoneName] = useState<string | null>(null);
+  const [totalPeople, setTotalPeople] = useState<number>(0);
+  const [genderData, setGenderData] = useState<{ maleNumber: number; femaleNumber: number }>({ maleNumber: 0, femaleNumber: 0 });
+  const [ageCategories, setAgeCategories] = useState<{ name: string; value: number }[]>([]);
+  const [travelTypes, setTravelTypes] = useState<{ [key: string]: number }>({});
+  const [destinationData, setDestinationData] = useState<{ country: string; value: number }[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Fetch data from individual endpoints
-    fetch('http://localhost:5000/zoneName')
-    .then((res) => res.json())
-    .then((data) => {
-      setZoneName(data.name);
-    });
+    setIsClient(true); // Set client-side flag to true on mount
 
-    fetch('http://localhost:5000/totalPeople')
-      .then((response) => response.json())
-      .then((data) => setTotalPeople(data));
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const responses = await Promise.all([
+          fetch('http://localhost:5000/zoneName'),
+          fetch('http://localhost:5000/totalPeople'),
+          fetch('http://localhost:5000/genderData'),
+          fetch('http://localhost:5000/ageCategories'),
+          fetch('http://localhost:5000/travelTypes'),
+          fetch('http://localhost:5000/destinationData')
+        ]);
 
-    fetch('http://localhost:5000/genderData')
-      .then((response) => response.json())
-      .then((data) => setGenderData(data));
+        const [zoneData, totalPeopleData, genderDataRes, ageCategoriesRes, travelTypesRes, destinationDataRes] = await Promise.all(responses.map((res) => res.json()));
 
-    fetch('http://localhost:5000/ageCategories')
-      .then((response) => response.json())
-      .then((data) => setAgeCategories(data));
+        setZoneName(zoneData.name);
+        setTotalPeople(totalPeopleData);
+        setGenderData(genderDataRes);
+        setAgeCategories(ageCategoriesRes);
+        setTravelTypes(travelTypesRes);
+        setDestinationData(destinationDataRes);
+      } catch (err) {
+        setError('An error occurred while fetching data.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    fetch('http://localhost:5000/travelTypes')
-      .then((response) => response.json())
-      .then((data) => setTravelTypes(data));
-
-    fetch('http://localhost:5000/destinationData')
-      .then((response) => response.json())
-      .then((data) => setDestinationData(data));
+    fetchData();
   }, []);
 
-//   // If the data is still loading, show a loading message
-//   if (
-//     !zoneName ||
-//     totalPeople === 0 ||
-//     !genderData ||
-//     !ageCategories.length ||
-//     !Object.keys(travelTypes).length ||
-//     !destinationData.length
-//   ) {
-//     return <div>Loading...</div>; // Show a loading state while data is being fetched
-//   }
+  if (!isClient) {
+    return null; // Don't render anything before client-side rendering
+  }
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  // Pass the fetched data to the AutomatedReportPage as props
   return (
     <AutomatedReportPage
-      zoneName={zoneName}
+      zoneName={zoneName || 'نام ناحیه'}
       totalPeople={totalPeople}
       genderData={genderData}
       ageCategories={ageCategories}
@@ -65,4 +73,4 @@ const ExampleUsage = () => {
   );
 };
 
-export default ExampleUsage;
+export default ReportPage;
